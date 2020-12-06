@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CharacterMove : MonoBehaviour
+public class Gameplay : MonoBehaviour
 {
     #region Properties
     public Button BtnUp;
@@ -18,6 +19,9 @@ public class CharacterMove : MonoBehaviour
     public Button BtnCamera;
     public Button BtnStat;
     public Button BtnCollapse;
+
+    public Button BtnStatClose;
+    public Image StatImage;
 
     public List<GameObject> ListMarker;
     public GameObject Player;
@@ -355,13 +359,33 @@ public class CharacterMove : MonoBehaviour
 
     public void Stat()
     {
-
+        StatImage.enabled = true;
     }
 
     public void CollapseStat()
     {
-        Panel.transform.position = new Vector3(1400, 2, 0);
+        var rectTrans = Panel.GetComponent<RectTransform>();
+        if (BtnCollapse.GetComponentInChildren<Text>().text == ">")
+        {
+            Utility.SetLeft(rectTrans, 1650);
+            Utility.SetRight(rectTrans, 0);
+            Utility.SetTop(rectTrans, 2);
+            Utility.SetBottom(rectTrans, 100);
+            BtnCollapse.GetComponentInChildren<Text>().text = "<";
+        }
+        else
+        {
+            Utility.SetLeft(rectTrans, 1075);
+            Utility.SetRight(rectTrans, 0);
+            Utility.SetTop(rectTrans, 2);
+            Utility.SetBottom(rectTrans, 100);
+            BtnCollapse.GetComponentInChildren<Text>().text = ">";
+        }    
+    }
 
+    public void CloseStats()
+    {
+        StatImage.enabled = false;
     }
 
     #endregion
